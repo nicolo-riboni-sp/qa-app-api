@@ -10,11 +10,12 @@ exports.create = (req, res) => {
     });
     return;
   }
+  const balance = (req.body.balance ? req.body.balance : 0);
 
   // Create a User
   const user = {
     name: req.body.name,
-    balance: 0,
+    balance: balance
   };
 
   // Save User in the database

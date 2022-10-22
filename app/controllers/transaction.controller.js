@@ -1,5 +1,6 @@
 const db = require('../../models');
 const Transaction = db.Transaction;
+const User = db.User;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -29,13 +30,28 @@ exports.create = (req, res) => {
   const transaction = {
     name: req.body.amount,
     sender: req.body.sender,
-    receiver: req.body.receiver
+    receiver: req.body.receiver,
+    amount: req.body.amount
   };
 
   // Save User in the database
   Transaction.create(transaction)
     .then(data => {
-      res.send(data);
+      User.findByPk(transaction.receiver).then(user => {
+        user.increment('balance', { by: transaction.amount });
+        User.findByPk(transaction.sender).then(user => {
+          user.increment('balance', { by: -transaction.amount });
+          res.send(data);
+        }).catch(err => {
+          res.status(500).send({
+            message: "Error updating balance of receiver User with id=" + id
+          });
+        });
+      }).catch(err => {
+        res.status(500).send({
+          message: "Error updating balance of receiver User with id=" + id
+        });
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -46,7 +62,11 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Transaction.findAll()
+  Transaction.findAll({
+    order: [
+      ["createdAt", "DESC"],
+    ],
+  })
     .then(data => {
       res.send(data);
     })
