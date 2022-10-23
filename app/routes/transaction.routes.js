@@ -9,5 +9,8 @@ module.exports = app => {
   // Retrieve all Transactions
   router.get("/", transactions.findAll);
 
+  // Retrieve User's Transactions
+  router.get("/:userId", transactions.findUserTransactions);
+
   app.use('/api/transactions', router);
 };

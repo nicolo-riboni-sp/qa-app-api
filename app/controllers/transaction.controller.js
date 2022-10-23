@@ -1,4 +1,5 @@
 const db = require('../../models');
+const user = require('../../models/user');
 const Transaction = db.Transaction;
 const User = db.User;
 const Op = db.Sequelize.Op;
@@ -77,3 +78,23 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+exports.findUserTransactions = (req, res) => {
+  const userId = req.params.userId;
+
+  Transaction.findAll({
+    where: { sender: userId },
+    order: [
+      ["createdAt", "DESC"],
+    ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving transactions."
+      });
+    });
+}
