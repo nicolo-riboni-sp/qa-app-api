@@ -64,7 +64,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+exports.addBalance = (req, res) => {
   const id = req.params.id;
 
   // Validate request
@@ -78,11 +78,11 @@ exports.update = (req, res) => {
   User.findByPk(id).then(user => {
     user.increment('balance', { by: req.body.topup }).then(num => {
       if (num == 1) {
-        res.send({
+        res.status(201).send({
           message: "User was updated successfully."
         });
       } else {
-        res.send({
+        res.status(400).send({
           message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
         });
       }
@@ -94,3 +94,11 @@ exports.update = (req, res) => {
   });
 };
 
+exports.delete = (req, res) => {
+  const id = req.params.id;
+  User.destroy({ where: { id } }).then(() => {
+    res.status(200).send({
+      message: "User was deleted successfully."
+    });
+  });
+};

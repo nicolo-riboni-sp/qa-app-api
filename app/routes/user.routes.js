@@ -13,7 +13,10 @@ module.exports = app => {
   router.get("/:id", users.findOne);
 
   // Update a User with id
-  router.put("/:id", users.update);
+  router.put("/:id", users.addBalance);
+
+  // Delete a user with id
+  router.delete("/:id", users.delete);
 
   app.use('/api/users', router);
 };

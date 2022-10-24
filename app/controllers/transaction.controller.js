@@ -42,7 +42,7 @@ exports.create = (req, res) => {
         user.increment('balance', { by: transaction.amount });
         User.findByPk(transaction.sender).then(user => {
           user.increment('balance', { by: -transaction.amount });
-          res.send(data);
+          resstatus(201).send(data);
         }).catch(err => {
           res.status(500).send({
             message: "Error updating balance of receiver User with id=" + id
