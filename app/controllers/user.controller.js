@@ -6,7 +6,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.name) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Name field must be present in the body"
     });
     return;
   }

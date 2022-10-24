@@ -8,28 +8,26 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.amount) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Amount field must be present in the body"
     });
     return;
   }
 
   if (!req.body.sender) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Sender field must be present in the body"
     });
     return;
   }
 
   if (!req.body.receiver) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Receiver field must be present in the body"
     });
     return;
   }
 
-  // Create a User
   const transaction = {
-    name: req.body.amount,
     sender: req.body.sender,
     receiver: req.body.receiver,
     amount: req.body.amount
@@ -42,15 +40,15 @@ exports.create = (req, res) => {
         user.increment('balance', { by: transaction.amount });
         User.findByPk(transaction.sender).then(user => {
           user.increment('balance', { by: -transaction.amount });
-          resstatus(201).send(data);
+          res.status(201).send(data);
         }).catch(err => {
           res.status(500).send({
-            message: "Error updating balance of receiver User with id=" + id
+            message: "Error updating balance of sender User with id=" + user.id
           });
         });
       }).catch(err => {
         res.status(500).send({
-          message: "Error updating balance of receiver User with id=" + id
+          message: "Error updating balance of receiver User with id=" + user.id
         });
       });
     })
