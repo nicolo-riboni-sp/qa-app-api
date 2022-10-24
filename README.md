@@ -3,11 +3,11 @@
 Welcome to the Super Secure Bank!
 As a new Admin you have the access to every user's account and you can make transactions on their behalf.
 
-In this the backend of the Super Secure Bank.
+This is the backend of the Super Secure Bank.
 Once the server is started test data is automatically loaded in the database
 
 # Setup
-- run 'nvm use'
+- if you have nvm installed you can run 'nvm use', otherwise you need to install node version 16
 - run 'npm install'
 - run 'npm run dev'
 - application is available at http://localhost:8080/
