@@ -4,7 +4,8 @@
   "description": "express project for qa assessment app",
   "main": "server.js",
   "scripts": {
-    "start": "rm 127.0.0.1 && sequelize-cli db:migrate && sequelize-cli db:seed:all && node server.js"
+    "start": "rm 127.0.0.1 && sequelize-cli db:migrate && sequelize-cli db:seed:all && node server.js",
+    "start:win": "del 127.0.0.1 && sequelize-cli db:migrate && sequelize-cli db:seed:all && node server.js"
   },
   "repository": {
     "type": "git",
